@@ -1,4 +1,8 @@
+import { CALCULATOR_VALUES } from "../constant";
+
 export interface CustomButtonProps {
-  value: string;
-  color?: "success" | "primary" | "error";
+  value: CalcaulatorValue;
+  handleClick: (value: CalcaulatorValue) => void;
 }
+
+export type CalcaulatorValue = (typeof CALCULATOR_VALUES)[number];

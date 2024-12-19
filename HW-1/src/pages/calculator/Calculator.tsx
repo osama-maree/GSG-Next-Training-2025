@@ -1,15 +1,41 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import classes from "./calculator.module.css";
 import CustomButton from "../../component/button";
-import { CALCULATOR_VALUEA } from "../../constant";
+import { CALCULATOR_VALUES } from "../../constant";
+import { CalcaulatorValue } from "../../types";
+import { calculate } from "../../utils";
 
-const App: React.FC = () => {
+const Calculator: React.FC = () => {
+  const [input, setInput] = useState<string>("");
+  const [result, setResult] = useState<number>();
+
+  const handleClick = (value: CalcaulatorValue) => {
+    switch (value) {
+      case "=":
+        setResult(calculate(input));
+        setInput("");
+        break;
+      case "X":
+        setInput(input.slice(0, -1));
+        break;
+      case "XX":
+        input.length > 1 && setInput(input.slice(0, -2));
+        break;
+      case "C":
+        setInput("");
+        setResult(undefined);
+        break;
+      default:
+        setInput((prev) => prev + value);
+        break;
+    }
+  };
+
   return (
     <Box className={classes.container}>
       <Paper
@@ -29,22 +55,21 @@ const App: React.FC = () => {
           sx={{ backgroundColor: "#f0f4f8", borderRadius: 1 }}
         >
           <Typography variant="h5" color="textSecondary">
-            {"0"}
+            {input || "0"}
           </Typography>
-          <Typography variant="h4" color="primary" fontWeight="bold">
-            {""}
+          <Typography variant="h4" color="warning" fontWeight="bold">
+            {result}
           </Typography>
         </Stack>
 
         <Grid container spacing={1}>
-          {CALCULATOR_VALUEA.map((value) => (
-            <CustomButton value={value} />
+          {CALCULATOR_VALUES.map((value) => (
+            <CustomButton value={value} handleClick={handleClick} key={value} />
           ))}
-          <CustomButton value="C" color="error" />
         </Grid>
       </Paper>
     </Box>
   );
 };
 
-export default App;
+export default Calculator;

@@ -1,4 +1,4 @@
-export const CALCULATOR_VALUEA = [
+export const CALCULATOR_VALUES = [
   "1",
   "2",
   "3",
@@ -15,10 +15,8 @@ export const CALCULATOR_VALUEA = [
   "-",
   "*",
   "/",
-  ".",
-  "%",
-  "^",
-  "sqrt",
   "X",
+  "XX",
   "=",
-];
+  "C",
+] as const;
